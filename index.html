@@ -56,7 +56,7 @@
             padding: 40px 30px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            min-height: 400px;
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -127,6 +127,10 @@
             border-left-color: #9f7aea;
         }
         
+        .tense-section.hidden {
+            display: none;
+        }
+        
         .tense-label {
             font-size: 0.85rem;
             font-weight: 600;
@@ -140,6 +144,14 @@
             font-size: 1.1rem;
             color: #333;
             font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .example-text {
+            font-size: 0.95rem;
+            color: #555;
+            font-style: italic;
+            line-height: 1.4;
         }
         
         /* Navigation */
@@ -296,7 +308,7 @@
             
             .flashcard {
                 padding: 30px 20px;
-                min-height: 350px;
+                min-height: 450px;
             }
             
             .verb-name {
@@ -313,7 +325,7 @@
     <div class="container">
         <div class="header">
             <h1>💬 ESL Verb Flashcards</h1>
-            <p class="progress" id="progress">Verb 1 of 100</p>
+            <p class="progress" id="progress">Verb 1 of 121</p>
         </div>
         
         <div class="flashcard">
@@ -324,29 +336,33 @@
             
             <div class="tense-section">
                 <div class="tense-label">Simple Present</div>
-                <div class="tense-text" id="simplePresent">I walk / He walks</div>
+                <div class="tense-text" id="simplePresent">I walk</div>
+                <div class="example-text" id="examplePresent">I walk to school every day.</div>
             </div>
             
-            <div class="tense-section">
+            <div class="tense-section" id="progressiveSection">
                 <div class="tense-label">Present Progressive</div>
                 <div class="tense-text" id="presentProgressive">I am walking</div>
+                <div class="example-text" id="exampleProgressive">I am walking to the park right now.</div>
             </div>
             
             <div class="tense-section">
                 <div class="tense-label">Simple Past</div>
                 <div class="tense-text" id="simplePast">I walked</div>
+                <div class="example-text" id="examplePast">I walked home yesterday.</div>
             </div>
             
             <div class="tense-section">
                 <div class="tense-label">Simple Future</div>
                 <div class="tense-text" id="simpleFuture">I will walk</div>
+                <div class="example-text" id="exampleFuture">I will walk to work tomorrow.</div>
             </div>
         </div>
         
         <div class="nav-buttons">
             <button class="btn-prev" onclick="previousVerb()">⬅️ Previous</button>
-            <button class="btn-random" onclick="randomVerb()">🔀 Random</button>
             <button class="btn-next" onclick="nextVerb()">Next ➡️</button>
+            <button class="btn-random" onclick="randomVerb()">🔀 Random</button>
         </div>
         
         <button class="verb-list-btn" onclick="toggleVerbList()">📖 View All Verbs</button>
@@ -365,106 +381,613 @@
     
     <script>
         const verbs = [
-            { verb: "walk", spanish: "caminar", present: "I walk / He walks", progressive: "I am walking", past: "I walked", future: "I will walk" },
-            { verb: "run", spanish: "correr", present: "I run / He runs", progressive: "I am running", past: "I ran", future: "I will run" },
-            { verb: "eat", spanish: "comer", present: "I eat / He eats", progressive: "I am eating", past: "I ate", future: "I will eat" },
-            { verb: "drink", spanish: "beber", present: "I drink / He drinks", progressive: "I am drinking", past: "I drank", future: "I will drink" },
-            { verb: "sleep", spanish: "dormir", present: "I sleep / He sleeps", progressive: "I am sleeping", past: "I slept", future: "I will sleep" },
-            { verb: "work", spanish: "trabajar", present: "I work / He works", progressive: "I am working", past: "I worked", future: "I will work" },
-            { verb: "read", spanish: "leer", present: "I read / He reads", progressive: "I am reading", past: "I read", future: "I will read" },
-            { verb: "write", spanish: "escribir", present: "I write / He writes", progressive: "I am writing", past: "I wrote", future: "I will write" },
-            { verb: "speak", spanish: "hablar", present: "I speak / He speaks", progressive: "I am speaking", past: "I spoke", future: "I will speak" },
-            { verb: "listen", spanish: "escuchar", present: "I listen / He listens", progressive: "I am listening", past: "I listened", future: "I will listen" },
-            { verb: "watch", spanish: "mirar", present: "I watch / He watches", progressive: "I am watching", past: "I watched", future: "I will watch" },
-            { verb: "cook", spanish: "cocinar", present: "I cook / He cooks", progressive: "I am cooking", past: "I cooked", future: "I will cook" },
-            { verb: "clean", spanish: "limpiar", present: "I clean / He cleans", progressive: "I am cleaning", past: "I cleaned", future: "I will clean" },
-            { verb: "drive", spanish: "conducir", present: "I drive / He drives", progressive: "I am driving", past: "I drove", future: "I will drive" },
-            { verb: "sit", spanish: "sentarse", present: "I sit / He sits", progressive: "I am sitting", past: "I sat", future: "I will sit" },
-            { verb: "stand", spanish: "estar de pie", present: "I stand / He stands", progressive: "I am standing", past: "I stood", future: "I will stand" },
-            { verb: "go", spanish: "ir", present: "I go / He goes", progressive: "I am going", past: "I went", future: "I will go" },
-            { verb: "come", spanish: "venir", present: "I come / He comes", progressive: "I am coming", past: "I came", future: "I will come" },
-            { verb: "open", spanish: "abrir", present: "I open / He opens", progressive: "I am opening", past: "I opened", future: "I will open" },
-            { verb: "close", spanish: "cerrar", present: "I close / He closes", progressive: "I am closing", past: "I closed", future: "I will close" },
-            { verb: "help", spanish: "ayudar", present: "I help / He helps", progressive: "I am helping", past: "I helped", future: "I will help" },
-            { verb: "learn", spanish: "aprender", present: "I learn / He learns", progressive: "I am learning", past: "I learned", future: "I will learn" },
-            { verb: "take", spanish: "tomar", present: "I take / He takes", progressive: "I am taking", past: "I took", future: "I will take" },
-            { verb: "make", spanish: "hacer", present: "I make / He makes", progressive: "I am making", past: "I made", future: "I will make" },
-            { verb: "have", spanish: "tener", present: "I have / He has", progressive: "I am having", past: "I had", future: "I will have" },
-            { verb: "want", spanish: "querer", present: "I want / He wants", progressive: "I am wanting", past: "I wanted", future: "I will want" },
-            { verb: "need", spanish: "necesitar", present: "I need / He needs", progressive: "I am needing", past: "I needed", future: "I will need" },
-            { verb: "play", spanish: "jugar", present: "I play / He plays", progressive: "I am playing", past: "I played", future: "I will play" },
-            { verb: "buy", spanish: "comprar", present: "I buy / He buys", progressive: "I am buying", past: "I bought", future: "I will buy" },
-            { verb: "count", spanish: "contar", present: "I count / He counts", progressive: "I am counting", past: "I counted", future: "I will count" },
-            { verb: "check", spanish: "revisar", present: "I check / He checks", progressive: "I am checking", past: "I checked", future: "I will check" },
-            { verb: "wash", spanish: "lavar", present: "I wash / He washes", progressive: "I am washing", past: "I washed", future: "I will wash" },
-            { verb: "wear", spanish: "usar", present: "I wear / He wears", progressive: "I am wearing", past: "I wore", future: "I will wear" },
-            { verb: "exercise", spanish: "hacer ejercicio", present: "I exercise / He exercises", progressive: "I am exercising", past: "I exercised", future: "I will exercise" },
-            { verb: "shower", spanish: "ducharse", present: "I shower / He showers", progressive: "I am showering", past: "I showered", future: "I will shower" },
-            { verb: "brush", spanish: "cepillar", present: "I brush / He brushes", progressive: "I am brushing", past: "I brushed", future: "I will brush" },
-            { verb: "wake", spanish: "despertar", present: "I wake / He wakes", progressive: "I am waking", past: "I woke", future: "I will wake" },
-            { verb: "rest", spanish: "descansar", present: "I rest / He rests", progressive: "I am resting", past: "I rested", future: "I will rest" },
-            { verb: "ask", spanish: "preguntar", present: "I ask / He asks", progressive: "I am asking", past: "I asked", future: "I will ask" },
-            { verb: "answer", spanish: "responder", present: "I answer / He answers", progressive: "I am answering", past: "I answered", future: "I will answer" },
-            { verb: "call", spanish: "llamar", present: "I call / He calls", progressive: "I am calling", past: "I called", future: "I will call" },
-            { verb: "text", spanish: "enviar mensaje", present: "I text / He texts", progressive: "I am texting", past: "I texted", future: "I will text" },
-            { verb: "email", spanish: "enviar correo", present: "I email / He emails", progressive: "I am emailing", past: "I emailed", future: "I will email" },
-            { verb: "explain", spanish: "explicar", present: "I explain / He explains", progressive: "I am explaining", past: "I explained", future: "I will explain" },
-            { verb: "understand", spanish: "entender", present: "I understand / He understands", progressive: "I am understanding", past: "I understood", future: "I will understand" },
-            { verb: "translate", spanish: "traducir", present: "I translate / He translates", progressive: "I am translating", past: "I translated", future: "I will translate" },
-            { verb: "jump", spanish: "saltar", present: "I jump / He jumps", progressive: "I am jumping", past: "I jumped", future: "I will jump" },
-            { verb: "climb", spanish: "escalar", present: "I climb / He climbs", progressive: "I am climbing", past: "I climbed", future: "I will climb" },
-            { verb: "turn", spanish: "girar", present: "I turn / He turns", progressive: "I am turning", past: "I turned", future: "I will turn" },
-            { verb: "stop", spanish: "parar", present: "I stop / He stops", progressive: "I am stopping", past: "I stopped", future: "I will stop" },
-            { verb: "start", spanish: "comenzar", present: "I start / He starts", progressive: "I am starting", past: "I started", future: "I will start" },
-            { verb: "leave", spanish: "salir", present: "I leave / He leaves", progressive: "I am leaving", past: "I left", future: "I will leave" },
-            { verb: "arrive", spanish: "llegar", present: "I arrive / He arrives", progressive: "I am arriving", past: "I arrived", future: "I will arrive" },
-            { verb: "enter", spanish: "entrar", present: "I enter / He enters", progressive: "I am entering", past: "I entered", future: "I will enter" },
-            { verb: "exit", spanish: "salir", present: "I exit / He exits", progressive: "I am exiting", past: "I exited", future: "I will exit" },
-            { verb: "return", spanish: "regresar", present: "I return / He returns", progressive: "I am returning", past: "I returned", future: "I will return" },
-            { verb: "push", spanish: "empujar", present: "I push / He pushes", progressive: "I am pushing", past: "I pushed", future: "I will push" },
-            { verb: "pull", spanish: "jalar", present: "I pull / He pulls", progressive: "I am pulling", past: "I pulled", future: "I will pull" },
-            { verb: "lift", spanish: "levantar", present: "I lift / He lifts", progressive: "I am lifting", past: "I lifted", future: "I will lift" },
-            { verb: "carry", spanish: "cargar", present: "I carry / He carries", progressive: "I am carrying", past: "I carried", future: "I will carry" },
-            { verb: "throw", spanish: "lanzar", present: "I throw / He throws", progressive: "I am throwing", past: "I threw", future: "I will throw" },
-            { verb: "catch", spanish: "atrapar", present: "I catch / He catches", progressive: "I am catching", past: "I caught", future: "I will catch" },
-            { verb: "hold", spanish: "sostener", present: "I hold / He holds", progressive: "I am holding", past: "I held", future: "I will hold" },
-            { verb: "drop", spanish: "dejar caer", present: "I drop / He drops", progressive: "I am dropping", past: "I dropped", future: "I will drop" },
-            { verb: "break", spanish: "romper", present: "I break / He breaks", progressive: "I am breaking", past: "I broke", future: "I will break" },
-            { verb: "fix", spanish: "arreglar", present: "I fix / He fixes", progressive: "I am fixing", past: "I fixed", future: "I will fix" },
-            { verb: "build", spanish: "construir", present: "I build / He builds", progressive: "I am building", past: "I built", future: "I will build" },
-            { verb: "cut", spanish: "cortar", present: "I cut / He cuts", progressive: "I am cutting", past: "I cut", future: "I will cut" },
-            { verb: "draw", spanish: "dibujar", present: "I draw / He draws", progressive: "I am drawing", past: "I drew", future: "I will draw" },
-            { verb: "paint", spanish: "pintar", present: "I paint / He paints", progressive: "I am painting", past: "I painted", future: "I will paint" },
-            { verb: "feel", spanish: "sentir", present: "I feel / He feels", progressive: "I am feeling", past: "I felt", future: "I will feel" },
-            { verb: "think", spanish: "pensar", present: "I think / He thinks", progressive: "I am thinking", past: "I thought", future: "I will think" },
-            { verb: "know", spanish: "saber", present: "I know / He knows", progressive: "I am knowing", past: "I knew", future: "I will know" },
-            { verb: "believe", spanish: "creer", present: "I believe / He believes", progressive: "I am believing", past: "I believed", future: "I will believe" },
-            { verb: "remember", spanish: "recordar", present: "I remember / He remembers", progressive: "I am remembering", past: "I remembered", future: "I will remember" },
-            { verb: "forget", spanish: "olvidar", present: "I forget / He forgets", progressive: "I am forgetting", past: "I forgot", future: "I will forget" },
-            { verb: "hope", spanish: "esperar", present: "I hope / He hopes", progressive: "I am hoping", past: "I hoped", future: "I will hope" },
-            { verb: "worry", spanish: "preocuparse", present: "I worry / He worries", progressive: "I am worrying", past: "I worried", future: "I will worry" },
-            { verb: "love", spanish: "amar", present: "I love / He loves", progressive: "I am loving", past: "I loved", future: "I will love" },
-            { verb: "hate", spanish: "odiar", present: "I hate / He hates", progressive: "I am hating", past: "I hated", future: "I will hate" },
-            { verb: "like", spanish: "gustar", present: "I like / He likes", progressive: "I am liking", past: "I liked", future: "I will like" },
-            { verb: "prefer", spanish: "preferir", present: "I prefer / He prefers", progressive: "I am preferring", past: "I preferred", future: "I will prefer" },
-            { verb: "taste", spanish: "probar", present: "I taste / He tastes", progressive: "I am tasting", past: "I tasted", future: "I will taste" },
-            { verb: "smell", spanish: "oler", present: "I smell / He smells", progressive: "I am smelling", past: "I smelled", future: "I will smell" },
-            { verb: "touch", spanish: "tocar", present: "I touch / He touches", progressive: "I am touching", past: "I touched", future: "I will touch" },
-            { verb: "see", spanish: "ver", present: "I see / He sees", progressive: "I am seeing", past: "I saw", future: "I will see" },
-            { verb: "hear", spanish: "oír", present: "I hear / He hears", progressive: "I am hearing", past: "I heard", future: "I will hear" },
-            { verb: "sing", spanish: "cantar", present: "I sing / He sings", progressive: "I am singing", past: "I sang", future: "I will sing" },
-            { verb: "dance", spanish: "bailar", present: "I dance / He dances", progressive: "I am dancing", past: "I danced", future: "I will dance" },
-            { verb: "swim", spanish: "nadar", present: "I swim / He swims", progressive: "I am swimming", past: "I swam", future: "I will swim" },
-            { verb: "fly", spanish: "volar", present: "I fly / He flies", progressive: "I am flying", past: "I flew", future: "I will fly" },
-            { verb: "teach", spanish: "enseñar", present: "I teach / He teaches", progressive: "I am teaching", past: "I taught", future: "I will teach" },
-            { verb: "study", spanish: "estudiar", present: "I study / He studies", progressive: "I am studying", past: "I studied", future: "I will study" },
-            { verb: "practice", spanish: "practicar", present: "I practice / He practices", progressive: "I am practicing", past: "I practiced", future: "I will practice" },
-            { verb: "try", spanish: "intentar", present: "I try / He tries", progressive: "I am trying", past: "I tried", future: "I will try" },
-            { verb: "use", spanish: "usar", present: "I use / He uses", progressive: "I am using", past: "I used", future: "I will use" },
-            { verb: "find", spanish: "encontrar", present: "I find / He finds", progressive: "I am finding", past: "I found", future: "I will find" },
-            { verb: "lose", spanish: "perder", present: "I lose / He loses", progressive: "I am losing", past: "I lost", future: "I will lose" },
-            { verb: "win", spanish: "ganar", present: "I win / He wins", progressive: "I am winning", past: "I won", future: "I will win" },
-            { verb: "wait", spanish: "esperar", present: "I wait / He waits", progressive: "I am waiting", past: "I waited", future: "I will wait" }
+            { 
+                verb: "be", spanish: "ser/estar", 
+                present: "I am", progressive: "", past: "I was", future: "I will be",
+                exPresent: "I am a student.", exProgressive: "", exPast: "I was happy yesterday.", exFuture: "I will be there tomorrow.",
+                hideProgressive: true
+            },
+            { 
+                verb: "walk", spanish: "caminar", 
+                present: "I walk", progressive: "I am walking", past: "I walked", future: "I will walk",
+                exPresent: "I walk to school every day.", exProgressive: "I am walking to the park right now.", exPast: "I walked home yesterday.", exFuture: "I will walk to work tomorrow."
+            },
+            { 
+                verb: "run", spanish: "correr", 
+                present: "I run", progressive: "I am running", past: "I ran", future: "I will run",
+                exPresent: "I run in the morning.", exProgressive: "I am running in the race.", exPast: "I ran five miles yesterday.", exFuture: "I will run tomorrow."
+            },
+            { 
+                verb: "eat", spanish: "comer", 
+                present: "I eat", progressive: "I am eating", past: "I ate", future: "I will eat",
+                exPresent: "I eat breakfast at 7 AM.", exProgressive: "I am eating lunch now.", exPast: "I ate dinner at 6 PM.", exFuture: "I will eat later."
+            },
+            { 
+                verb: "drink", spanish: "beber", 
+                present: "I drink", progressive: "I am drinking", past: "I drank", future: "I will drink",
+                exPresent: "I drink water every day.", exProgressive: "I am drinking coffee.", exPast: "I drank tea this morning.", exFuture: "I will drink juice later."
+            },
+            { 
+                verb: "sleep", spanish: "dormir", 
+                present: "I sleep", progressive: "I am sleeping", past: "I slept", future: "I will sleep",
+                exPresent: "I sleep eight hours.", exProgressive: "I am sleeping now.", exPast: "I slept well last night.", exFuture: "I will sleep early tonight."
+            },
+            { 
+                verb: "work", spanish: "trabajar", 
+                present: "I work", progressive: "I am working", past: "I worked", future: "I will work",
+                exPresent: "I work five days a week.", exProgressive: "I am working on a project.", exPast: "I worked late yesterday.", exFuture: "I will work from home tomorrow."
+            },
+            { 
+                verb: "read", spanish: "leer", 
+                present: "I read", progressive: "I am reading", past: "I read", future: "I will read",
+                exPresent: "I read books every week.", exProgressive: "I am reading a novel.", exPast: "I read the newspaper this morning.", exFuture: "I will read tonight."
+            },
+            { 
+                verb: "write", spanish: "escribir", 
+                present: "I write", progressive: "I am writing", past: "I wrote", future: "I will write",
+                exPresent: "I write emails daily.", exProgressive: "I am writing a letter.", exPast: "I wrote in my journal yesterday.", exFuture: "I will write tomorrow."
+            },
+            { 
+                verb: "speak", spanish: "hablar", 
+                present: "I speak", progressive: "I am speaking", past: "I spoke", future: "I will speak",
+                exPresent: "I speak English.", exProgressive: "I am speaking to my friend.", exPast: "I spoke at the meeting.", exFuture: "I will speak tomorrow."
+            },
+            { 
+                verb: "listen", spanish: "escuchar", 
+                present: "I listen", progressive: "I am listening", past: "I listened", future: "I will listen",
+                exPresent: "I listen to music daily.", exProgressive: "I am listening to the radio.", exPast: "I listened carefully.", exFuture: "I will listen to you."
+            },
+            { 
+                verb: "watch", spanish: "mirar", 
+                present: "I watch", progressive: "I am watching", past: "I watched", future: "I will watch",
+                exPresent: "I watch TV at night.", exProgressive: "I am watching a movie.", exPast: "I watched the game yesterday.", exFuture: "I will watch later."
+            },
+            { 
+                verb: "cook", spanish: "cocinar", 
+                present: "I cook", progressive: "I am cooking", past: "I cooked", future: "I will cook",
+                exPresent: "I cook dinner every night.", exProgressive: "I am cooking pasta.", exPast: "I cooked breakfast this morning.", exFuture: "I will cook tomorrow."
+            },
+            { 
+                verb: "clean", spanish: "limpiar", 
+                present: "I clean", progressive: "I am cleaning", past: "I cleaned", future: "I will clean",
+                exPresent: "I clean my room weekly.", exProgressive: "I am cleaning the kitchen.", exPast: "I cleaned the house yesterday.", exFuture: "I will clean later."
+            },
+            { 
+                verb: "drive", spanish: "conducir", 
+                present: "I drive", progressive: "I am driving", past: "I drove", future: "I will drive",
+                exPresent: "I drive to work.", exProgressive: "I am driving home.", exPast: "I drove to the store.", exFuture: "I will drive tomorrow."
+            },
+            { 
+                verb: "sit", spanish: "sentarse", 
+                present: "I sit", progressive: "I am sitting", past: "I sat", future: "I will sit",
+                exPresent: "I sit at my desk.", exProgressive: "I am sitting down.", exPast: "I sat in the front row.", exFuture: "I will sit here."
+            },
+            { 
+                verb: "stand", spanish: "estar de pie", 
+                present: "I stand", progressive: "I am standing", past: "I stood", future: "I will stand",
+                exPresent: "I stand by the door.", exProgressive: "I am standing in line.", exPast: "I stood up.", exFuture: "I will stand over there."
+            },
+            { 
+                verb: "go", spanish: "ir", 
+                present: "I go", progressive: "I am going", past: "I went", future: "I will go",
+                exPresent: "I go to school every day.", exProgressive: "I am going home.", exPast: "I went shopping yesterday.", exFuture: "I will go tomorrow."
+            },
+            { 
+                verb: "come", spanish: "venir", 
+                present: "I come", progressive: "I am coming", past: "I came", future: "I will come",
+                exPresent: "I come here often.", exProgressive: "I am coming now.", exPast: "I came early yesterday.", exFuture: "I will come later."
+            },
+            { 
+                verb: "open", spanish: "abrir", 
+                present: "I open", progressive: "I am opening", past: "I opened", future: "I will open",
+                exPresent: "I open the door.", exProgressive: "I am opening the window.", exPast: "I opened my bag.", exFuture: "I will open it."
+            },
+            { 
+                verb: "close", spanish: "cerrar", 
+                present: "I close", progressive: "I am closing", past: "I closed", future: "I will close",
+                exPresent: "I close the store at 9 PM.", exProgressive: "I am closing the door.", exPast: "I closed the window.", exFuture: "I will close early."
+            },
+            { 
+                verb: "help", spanish: "ayudar", 
+                present: "I help", progressive: "I am helping", past: "I helped", future: "I will help",
+                exPresent: "I help my friends.", exProgressive: "I am helping my mom.", exPast: "I helped yesterday.", exFuture: "I will help you."
+            },
+            { 
+                verb: "learn", spanish: "aprender", 
+                present: "I learn", progressive: "I am learning", past: "I learned", future: "I will learn",
+                exPresent: "I learn new words daily.", exProgressive: "I am learning English.", exPast: "I learned a lot yesterday.", exFuture: "I will learn more."
+            },
+            { 
+                verb: "take", spanish: "tomar", 
+                present: "I take", progressive: "I am taking", past: "I took", future: "I will take",
+                exPresent: "I take the bus daily.", exProgressive: "I am taking a photo.", exPast: "I took medicine.", exFuture: "I will take a break."
+            },
+            { 
+                verb: "make", spanish: "hacer", 
+                present: "I make", progressive: "I am making", past: "I made", future: "I will make",
+                exPresent: "I make breakfast every day.", exProgressive: "I am making dinner.", exPast: "I made a mistake.", exFuture: "I will make time."
+            },
+            { 
+                verb: "have", spanish: "tener", 
+                present: "I have", progressive: "", past: "I had", future: "I will have",
+                exPresent: "I have a car.", exProgressive: "", exPast: "I had a good time.", exFuture: "I will have fun.",
+                hideProgressive: true
+            },
+            { 
+                verb: "want", spanish: "querer", 
+                present: "I want", progressive: "I am wanting", past: "I wanted", future: "I will want",
+                exPresent: "I want coffee.", exProgressive: "I am wanting to go.", exPast: "I wanted more.", exFuture: "I will want this."
+            },
+            { 
+                verb: "need", spanish: "necesitar", 
+                present: "I need", progressive: "I am needing", past: "I needed", future: "I will need",
+                exPresent: "I need water.", exProgressive: "I am needing help.", exPast: "I needed time.", exFuture: "I will need it."
+            },
+            { 
+                verb: "play", spanish: "jugar", 
+                present: "I play", progressive: "I am playing", past: "I played", future: "I will play",
+                exPresent: "I play soccer on weekends.", exProgressive: "I am playing music.", exPast: "I played guitar yesterday.", exFuture: "I will play tomorrow."
+            },
+            { 
+                verb: "buy", spanish: "comprar", 
+                present: "I buy", progressive: "I am buying", past: "I bought", future: "I will buy",
+                exPresent: "I buy groceries weekly.", exProgressive: "I am buying a car.", exPast: "I bought a house.", exFuture: "I will buy tickets."
+            },
+            { 
+                verb: "count", spanish: "contar", 
+                present: "I count", progressive: "I am counting", past: "I counted", future: "I will count",
+                exPresent: "I count to ten.", exProgressive: "I am counting money.", exPast: "I counted them.", exFuture: "I will count later."
+            },
+            { 
+                verb: "check", spanish: "revisar", 
+                present: "I check", progressive: "I am checking", past: "I checked", future: "I will check",
+                exPresent: "I check my email daily.", exProgressive: "I am checking my phone.", exPast: "I checked the time.", exFuture: "I will check later."
+            },
+            { 
+                verb: "wash", spanish: "lavar", 
+                present: "I wash", progressive: "I am washing", past: "I washed", future: "I will wash",
+                exPresent: "I wash dishes every night.", exProgressive: "I am washing my car.", exPast: "I washed my hands.", exFuture: "I will wash later."
+            },
+            { 
+                verb: "wear", spanish: "usar", 
+                present: "I wear", progressive: "I am wearing", past: "I wore", future: "I will wear",
+                exPresent: "I wear glasses.", exProgressive: "I am wearing a coat.", exPast: "I wore a suit.", exFuture: "I will wear jeans."
+            },
+            { 
+                verb: "exercise", spanish: "hacer ejercicio", 
+                present: "I exercise", progressive: "I am exercising", past: "I exercised", future: "I will exercise",
+                exPresent: "I exercise daily.", exProgressive: "I am exercising now.", exPast: "I exercised yesterday.", exFuture: "I will exercise tomorrow."
+            },
+            { 
+                verb: "shower", spanish: "ducharse", 
+                present: "I shower", progressive: "I am showering", past: "I showered", future: "I will shower",
+                exPresent: "I shower every morning.", exProgressive: "I am showering now.", exPast: "I showered early.", exFuture: "I will shower later."
+            },
+            { 
+                verb: "brush", spanish: "cepillar", 
+                present: "I brush", progressive: "I am brushing", past: "I brushed", future: "I will brush",
+                exPresent: "I brush my teeth daily.", exProgressive: "I am brushing my hair.", exPast: "I brushed my teeth.", exFuture: "I will brush later."
+            },
+            { 
+                verb: "wake", spanish: "despertar", 
+                present: "I wake", progressive: "I am waking", past: "I woke", future: "I will wake",
+                exPresent: "I wake at 7 AM.", exProgressive: "I am waking up.", exPast: "I woke early.", exFuture: "I will wake early."
+            },
+            { 
+                verb: "rest", spanish: "descansar", 
+                present: "I rest", progressive: "I am resting", past: "I rested", future: "I will rest",
+                exPresent: "I rest on Sundays.", exProgressive: "I am resting now.", exPast: "I rested well.", exFuture: "I will rest later."
+            },
+            { 
+                verb: "ask", spanish: "preguntar", 
+                present: "I ask", progressive: "I am asking", past: "I asked", future: "I will ask",
+                exPresent: "I ask questions.", exProgressive: "I am asking for help.", exPast: "I asked yesterday.", exFuture: "I will ask tomorrow."
+            },
+            { 
+                verb: "answer", spanish: "responder", 
+                present: "I answer", progressive: "I am answering", past: "I answered", future: "I will answer",
+                exPresent: "I answer emails.", exProgressive: "I am answering now.", exPast: "I answered correctly.", exFuture: "I will answer later."
+            },
+            { 
+                verb: "call", spanish: "llamar", 
+                present: "I call", progressive: "I am calling", past: "I called", future: "I will call",
+                exPresent: "I call my mom weekly.", exProgressive: "I am calling my friend.", exPast: "I called yesterday.", exFuture: "I will call you."
+            },
+            { 
+                verb: "text", spanish: "enviar mensaje", 
+                present: "I text", progressive: "I am texting", past: "I texted", future: "I will text",
+                exPresent: "I text my friends.", exProgressive: "I am texting now.", exPast: "I texted earlier.", exFuture: "I will text you."
+            },
+            { 
+                verb: "email", spanish: "enviar correo", 
+                present: "I email", progressive: "I am emailing", past: "I emailed", future: "I will email",
+                exPresent: "I email clients daily.", exProgressive: "I am emailing my boss.", exPast: "I emailed yesterday.", exFuture: "I will email later."
+            },
+            { 
+                verb: "explain", spanish: "explicar", 
+                present: "I explain", progressive: "I am explaining", past: "I explained", future: "I will explain",
+                exPresent: "I explain things clearly.", exProgressive: "I am explaining now.", exPast: "I explained yesterday.", exFuture: "I will explain later."
+            },
+            { 
+                verb: "understand", spanish: "entender", 
+                present: "I understand", progressive: "I am understanding", past: "I understood", future: "I will understand",
+                exPresent: "I understand English.", exProgressive: "I am understanding now.", exPast: "I understood the lesson.", exFuture: "I will understand soon."
+            },
+            { 
+                verb: "translate", spanish: "traducir", 
+                present: "I translate", progressive: "I am translating", past: "I translated", future: "I will translate",
+                exPresent: "I translate documents.", exProgressive: "I am translating now.", exPast: "I translated yesterday.", exFuture: "I will translate it."
+            },
+            { 
+                verb: "jump", spanish: "saltar", 
+                present: "I jump", progressive: "I am jumping", past: "I jumped", future: "I will jump",
+                exPresent: "I jump rope daily.", exProgressive: "I am jumping now.", exPast: "I jumped high.", exFuture: "I will jump tomorrow."
+            },
+            { 
+                verb: "climb", spanish: "escalar", 
+                present: "I climb", progressive: "I am climbing", past: "I climbed", future: "I will climb",
+                exPresent: "I climb mountains.", exProgressive: "I am climbing stairs.", exPast: "I climbed yesterday.", exFuture: "I will climb tomorrow."
+            },
+            { 
+                verb: "turn", spanish: "girar", 
+                present: "I turn", progressive: "I am turning", past: "I turned", future: "I will turn",
+                exPresent: "I turn left here.", exProgressive: "I am turning around.", exPast: "I turned the page.", exFuture: "I will turn right."
+            },
+            { 
+                verb: "stop", spanish: "parar", 
+                present: "I stop", progressive: "I am stopping", past: "I stopped", future: "I will stop",
+                exPresent: "I stop at red lights.", exProgressive: "I am stopping now.", exPast: "I stopped working.", exFuture: "I will stop soon."
+            },
+            { 
+                verb: "start", spanish: "comenzar", 
+                present: "I start", progressive: "I am starting", past: "I started", future: "I will start",
+                exPresent: "I start work at 9 AM.", exProgressive: "I am starting now.", exPast: "I started yesterday.", exFuture: "I will start tomorrow."
+            },
+            { 
+                verb: "leave", spanish: "salir", 
+                present: "I leave", progressive: "I am leaving", past: "I left", future: "I will leave",
+                exPresent: "I leave at 5 PM.", exProgressive: "I am leaving now.", exPast: "I left early.", exFuture: "I will leave tomorrow."
+            },
+            { 
+                verb: "arrive", spanish: "llegar", 
+                present: "I arrive", progressive: "I am arriving", past: "I arrived", future: "I will arrive",
+                exPresent: "I arrive at 9 AM.", exProgressive: "I am arriving soon.", exPast: "I arrived late.", exFuture: "I will arrive early."
+            },
+            { 
+                verb: "enter", spanish: "entrar", 
+                present: "I enter", progressive: "I am entering", past: "I entered", future: "I will enter",
+                exPresent: "I enter the building.", exProgressive: "I am entering now.", exPast: "I entered quietly.", exFuture: "I will enter soon."
+            },
+            { 
+                verb: "exit", spanish: "salir", 
+                present: "I exit", progressive: "I am exiting", past: "I exited", future: "I will exit",
+                exPresent: "I exit through the back.", exProgressive: "I am exiting now.", exPast: "I exited quickly.", exFuture: "I will exit here."
+            },
+            { 
+                verb: "return", spanish: "regresar", 
+                present: "I return", progressive: "I am returning", past: "I returned", future: "I will return",
+                exPresent: "I return home daily.", exProgressive: "I am returning it.", exPast: "I returned yesterday.", exFuture: "I will return soon."
+            },
+            { 
+                verb: "push", spanish: "empujar", 
+                present: "I push", progressive: "I am pushing", past: "I pushed", future: "I will push",
+                exPresent: "I push the door.", exProgressive: "I am pushing the cart.", exPast: "I pushed it open.", exFuture: "I will push harder."
+            },
+            { 
+                verb: "pull", spanish: "jalar", 
+                present: "I pull", progressive: "I am pulling", past: "I pulled", future: "I will pull",
+                exPresent: "I pull the rope.", exProgressive: "I am pulling it.", exPast: "I pulled the door.", exFuture: "I will pull together."
+            },
+            { 
+                verb: "lift", spanish: "levantar", 
+                present: "I lift", progressive: "I am lifting", past: "I lifted", future: "I will lift",
+                exPresent: "I lift weights.", exProgressive: "I am lifting the box.", exPast: "I lifted it.", exFuture: "I will lift more."
+            },
+            { 
+                verb: "carry", spanish: "cargar", 
+                present: "I carry", progressive: "I am carrying", past: "I carried", future: "I will carry",
+                exPresent: "I carry my bag.", exProgressive: "I am carrying it.", exPast: "I carried the box.", exFuture: "I will carry it."
+            },
+            { 
+                verb: "throw", spanish: "lanzar", 
+                present: "I throw", progressive: "I am throwing", past: "I threw", future: "I will throw",
+                exPresent: "I throw the ball.", exProgressive: "I am throwing it.", exPast: "I threw it far.", exFuture: "I will throw together."
+            },
+            { 
+                verb: "catch", spanish: "atrapar", 
+                present: "I catch", progressive: "I am catching", past: "I caught", future: "I will catch",
+                exPresent: "I catch easily.", exProgressive: "I am catching the ball.", exPast: "I caught it.", exFuture: "I will catch it."
+            },
+            { 
+                verb: "hold", spanish: "sostener", 
+                present: "I hold", progressive: "I am holding", past: "I held", future: "I will hold",
+                exPresent: "I hold the baby.", exProgressive: "I am holding it.", exPast: "I held the door.", exFuture: "I will hold on."
+            },
+            { 
+                verb: "drop", spanish: "dejar caer", 
+                present: "I drop", progressive: "I am dropping", past: "I dropped", future: "I will drop",
+                exPresent: "I drop things often.", exProgressive: "I am dropping it.", exPast: "I dropped my phone.", exFuture: "I will drop by."
+            },
+            { 
+                verb: "break", spanish: "romper", 
+                present: "I break", progressive: "I am breaking", past: "I broke", future: "I will break",
+                exPresent: "I break eggs.", exProgressive: "I am breaking it.", exPast: "I broke the glass.", exFuture: "I will break it."
+            },
+            { 
+                verb: "fix", spanish: "arreglar", 
+                present: "I fix", progressive: "I am fixing", past: "I fixed", future: "I will fix",
+                exPresent: "I fix cars.", exProgressive: "I am fixing it.", exPast: "I fixed the problem.", exFuture: "I will fix it."
+            },
+            { 
+                verb: "build", spanish: "construir", 
+                present: "I build", progressive: "I am building", past: "I built", future: "I will build",
+                exPresent: "I build houses.", exProgressive: "I am building a tower.", exPast: "I built a bridge.", exFuture: "I will build it."
+            },
+            { 
+                verb: "cut", spanish: "cortar", 
+                present: "I cut", progressive: "I am cutting", past: "I cut", future: "I will cut",
+                exPresent: "I cut paper.", exProgressive: "I am cutting vegetables.", exPast: "I cut my hair.", exFuture: "I will cut it."
+            },
+            { 
+                verb: "draw", spanish: "dibujar", 
+                present: "I draw", progressive: "I am drawing", past: "I drew", future: "I will draw",
+                exPresent: "I draw pictures.", exProgressive: "I am drawing now.", exPast: "I drew a cat.", exFuture: "I will draw later."
+            },
+            { 
+                verb: "paint", spanish: "pintar", 
+                present: "I paint", progressive: "I am painting", past: "I painted", future: "I will paint",
+                exPresent: "I paint on weekends.", exProgressive: "I am painting the wall.", exPast: "I painted yesterday.", exFuture: "I will paint tomorrow."
+            },
+            { 
+                verb: "feel", spanish: "sentir", 
+                present: "I feel", progressive: "I am feeling", past: "I felt", future: "I will feel",
+                exPresent: "I feel happy.", exProgressive: "I am feeling better.", exPast: "I felt sick.", exFuture: "I will feel great."
+            },
+            { 
+                verb: "think", spanish: "pensar", 
+                present: "I think", progressive: "I am thinking", past: "I thought", future: "I will think",
+                exPresent: "I think carefully.", exProgressive: "I am thinking hard.", exPast: "I thought about it.", exFuture: "I will think it over."
+            },
+            { 
+                verb: "know", spanish: "saber", 
+                present: "I know", progressive: "I am knowing", past: "I knew", future: "I will know",
+                exPresent: "I know the answer.", exProgressive: "I am knowing more.", exPast: "I knew her.", exFuture: "I will know soon."
+            },
+            { 
+                verb: "believe", spanish: "creer", 
+                present: "I believe", progressive: "I am believing", past: "I believed", future: "I will believe",
+                exPresent: "I believe you.", exProgressive: "I am believing it.", exPast: "I believed her.", exFuture: "I will believe it."
+            },
+            { 
+                verb: "remember", spanish: "recordar", 
+                present: "I remember", progressive: "I am remembering", past: "I remembered", future: "I will remember",
+                exPresent: "I remember names.", exProgressive: "I am remembering now.", exPast: "I remembered it.", exFuture: "I will remember."
+            },
+            { 
+                verb: "forget", spanish: "olvidar", 
+                present: "I forget", progressive: "I am forgetting", past: "I forgot", future: "I will forget",
+                exPresent: "I forget things.", exProgressive: "I am forgetting.", exPast: "I forgot my keys.", exFuture: "I will forget."
+            },
+            { 
+                verb: "hope", spanish: "esperar", 
+                present: "I hope", progressive: "I am hoping", past: "I hoped", future: "I will hope",
+                exPresent: "I hope so.", exProgressive: "I am hoping for rain.", exPast: "I hoped to win.", exFuture: "I will hope for the best."
+            },
+            { 
+                verb: "worry", spanish: "preocuparse", 
+                present: "I worry", progressive: "I am worrying", past: "I worried", future: "I will worry",
+                exPresent: "I worry sometimes.", exProgressive: "I am worrying now.", exPast: "I worried yesterday.", exFuture: "I will worry later."
+            },
+            { 
+                verb: "love", spanish: "amar", 
+                present: "I love", progressive: "I am loving", past: "I loved", future: "I will love",
+                exPresent: "I love music.", exProgressive: "I am loving this.", exPast: "I loved that movie.", exFuture: "I will love it."
+            },
+            { 
+                verb: "hate", spanish: "odiar", 
+                present: "I hate", progressive: "I am hating", past: "I hated", future: "I will hate",
+                exPresent: "I hate cold weather.", exProgressive: "I am hating this.", exPast: "I hated waiting.", exFuture: "I will hate it."
+            },
+            { 
+                verb: "like", spanish: "gustar", 
+                present: "I like", progressive: "I am liking", past: "I liked", future: "I will like",
+                exPresent: "I like pizza.", exProgressive: "I am liking it.", exPast: "I liked the movie.", exFuture: "I will like it."
+            },
+            { 
+                verb: "prefer", spanish: "preferir", 
+                present: "I prefer", progressive: "I am preferring", past: "I preferred", future: "I will prefer",
+                exPresent: "I prefer tea.", exProgressive: "I am preferring this.", exPast: "I preferred that one.", exFuture: "I will prefer it."
+            },
+            { 
+                verb: "taste", spanish: "probar", 
+                present: "I taste", progressive: "I am tasting", past: "I tasted", future: "I will taste",
+                exPresent: "I taste the food.", exProgressive: "I am tasting it.", exPast: "I tasted it.", exFuture: "I will taste it."
+            },
+            { 
+                verb: "smell", spanish: "oler", 
+                present: "I smell", progressive: "I am smelling", past: "I smelled", future: "I will smell",
+                exPresent: "I smell flowers.", exProgressive: "I am smelling it.", exPast: "I smelled smoke.", exFuture: "I will smell it."
+            },
+            { 
+                verb: "touch", spanish: "tocar", 
+                present: "I touch", progressive: "I am touching", past: "I touched", future: "I will touch",
+                exPresent: "I touch the wall.", exProgressive: "I am touching it.", exPast: "I touched it.", exFuture: "I will touch it."
+            },
+            { 
+                verb: "see", spanish: "ver", 
+                present: "I see", progressive: "I am seeing", past: "I saw", future: "I will see",
+                exPresent: "I see a bird.", exProgressive: "I am seeing a doctor.", exPast: "I saw a movie.", exFuture: "I will see you."
+            },
+            { 
+                verb: "hear", spanish: "oír", 
+                present: "I hear", progressive: "I am hearing", past: "I heard", future: "I will hear",
+                exPresent: "I hear music.", exProgressive: "I am hearing it.", exPast: "I heard a noise.", exFuture: "I will hear you."
+            },
+            { 
+                verb: "sing", spanish: "cantar", 
+                present: "I sing", progressive: "I am singing", past: "I sang", future: "I will sing",
+                exPresent: "I sing in the shower.", exProgressive: "I am singing a song.", exPast: "I sang at the party.", exFuture: "I will sing tomorrow."
+            },
+            { 
+                verb: "dance", spanish: "bailar", 
+                present: "I dance", progressive: "I am dancing", past: "I danced", future: "I will dance",
+                exPresent: "I dance every week.", exProgressive: "I am dancing now.", exPast: "I danced all night.", exFuture: "I will dance later."
+            },
+            { 
+                verb: "swim", spanish: "nadar", 
+                present: "I swim", progressive: "I am swimming", past: "I swam", future: "I will swim",
+                exPresent: "I swim in summer.", exProgressive: "I am swimming now.", exPast: "I swam yesterday.", exFuture: "I will swim tomorrow."
+            },
+            { 
+                verb: "fly", spanish: "volar", 
+                present: "I fly", progressive: "I am flying", past: "I flew", future: "I will fly",
+                exPresent: "I fly often.", exProgressive: "I am flying to Paris.", exPast: "I flew last week.", exFuture: "I will fly tomorrow."
+            },
+            { 
+                verb: "teach", spanish: "enseñar", 
+                present: "I teach", progressive: "I am teaching", past: "I taught", future: "I will teach",
+                exPresent: "I teach English.", exProgressive: "I am teaching a class.", exPast: "I taught yesterday.", exFuture: "I will teach next week."
+            },
+            { 
+                verb: "study", spanish: "estudiar", 
+                present: "I study", progressive: "I am studying", past: "I studied", future: "I will study",
+                exPresent: "I study daily.", exProgressive: "I am studying math.", exPast: "I studied yesterday.", exFuture: "I will study tonight."
+            },
+            { 
+                verb: "practice", spanish: "practicar", 
+                present: "I practice", progressive: "I am practicing", past: "I practiced", future: "I will practice",
+                exPresent: "I practice guitar.", exProgressive: "I am practicing now.", exPast: "I practiced yesterday.", exFuture: "I will practice tomorrow."
+            },
+            { 
+                verb: "try", spanish: "intentar", 
+                present: "I try", progressive: "I am trying", past: "I tried", future: "I will try",
+                exPresent: "I try my best.", exProgressive: "I am trying hard.", exPast: "I tried yesterday.", exFuture: "I will try again."
+            },
+            { 
+                verb: "use", spanish: "usar", 
+                present: "I use", progressive: "I am using", past: "I used", future: "I will use",
+                exPresent: "I use my phone daily.", exProgressive: "I am using the computer.", exPast: "I used it.", exFuture: "I will use it."
+            },
+            { 
+                verb: "find", spanish: "encontrar", 
+                present: "I find", progressive: "I am finding", past: "I found", future: "I will find",
+                exPresent: "I find this interesting.", exProgressive: "I am finding answers.", exPast: "I found my keys.", exFuture: "I will find it."
+            },
+            { 
+                verb: "lose", spanish: "perder", 
+                present: "I lose", progressive: "I am losing", past: "I lost", future: "I will lose",
+                exPresent: "I lose things often.", exProgressive: "I am losing weight.", exPast: "I lost my phone.", exFuture: "I will lose time."
+            },
+            { 
+                verb: "win", spanish: "ganar", 
+                present: "I win", progressive: "I am winning", past: "I won", future: "I will win",
+                exPresent: "I win games.", exProgressive: "I am winning now.", exPast: "I won yesterday.", exFuture: "I will win tomorrow."
+            },
+            { 
+                verb: "wait", spanish: "esperar", 
+                present: "I wait", progressive: "I am waiting", past: "I waited", future: "I will wait",
+                exPresent: "I wait for the bus.", exProgressive: "I am waiting now.", exPast: "I waited an hour.", exFuture: "I will wait here."
+            },
+            { 
+                verb: "save", spanish: "ahorrar", 
+                present: "I save", progressive: "I am saving", past: "I saved", future: "I will save",
+                exPresent: "I save money every month.", exProgressive: "I am saving for a car.", exPast: "I saved $100 yesterday.", exFuture: "I will save more."
+            },
+            { 
+                verb: "spend", spanish: "gastar", 
+                present: "I spend", progressive: "I am spending", past: "I spent", future: "I will spend",
+                exPresent: "I spend time with family.", exProgressive: "I am spending money.", exPast: "I spent too much.", exFuture: "I will spend wisely."
+            },
+            { 
+                verb: "pay", spanish: "pagar", 
+                present: "I pay", progressive: "I am paying", past: "I paid", future: "I will pay",
+                exPresent: "I pay my bills on time.", exProgressive: "I am paying now.", exPast: "I paid yesterday.", exFuture: "I will pay tomorrow."
+            },
+            { 
+                verb: "give", spanish: "dar", 
+                present: "I give", progressive: "I am giving", past: "I gave", future: "I will give",
+                exPresent: "I give gifts.", exProgressive: "I am giving a presentation.", exPast: "I gave her flowers.", exFuture: "I will give you time."
+            },
+            { 
+                verb: "receive", spanish: "recibir", 
+                present: "I receive", progressive: "I am receiving", past: "I received", future: "I will receive",
+                exPresent: "I receive emails daily.", exProgressive: "I am receiving a package.", exPast: "I received a gift.", exFuture: "I will receive it tomorrow."
+            },
+            { 
+                verb: "send", spanish: "enviar", 
+                present: "I send", progressive: "I am sending", past: "I sent", future: "I will send",
+                exPresent: "I send letters.", exProgressive: "I am sending an email.", exPast: "I sent it yesterday.", exFuture: "I will send it later."
+            },
+            { 
+                verb: "borrow", spanish: "pedir prestado", 
+                present: "I borrow", progressive: "I am borrowing", past: "I borrowed", future: "I will borrow",
+                exPresent: "I borrow books from the library.", exProgressive: "I am borrowing money.", exPast: "I borrowed his car.", exFuture: "I will borrow it tomorrow."
+            },
+            { 
+                verb: "lend", spanish: "prestar", 
+                present: "I lend", progressive: "I am lending", past: "I lent", future: "I will lend",
+                exPresent: "I lend money to friends.", exProgressive: "I am lending my car.", exPast: "I lent him $20.", exFuture: "I will lend you my book."
+            },
+            { 
+                verb: "rent", spanish: "alquilar", 
+                present: "I rent", progressive: "I am renting", past: "I rented", future: "I will rent",
+                exPresent: "I rent an apartment.", exProgressive: "I am renting a car.", exPast: "I rented a movie.", exFuture: "I will rent a house."
+            },
+            { 
+                verb: "own", spanish: "poseer", 
+                present: "I own", progressive: "I am owning", past: "I owned", future: "I will own",
+                exPresent: "I own a car.", exProgressive: "I am owning this.", exPast: "I owned a dog.", exFuture: "I will own a house."
+            },
+            { 
+                verb: "travel", spanish: "viajar", 
+                present: "I travel", progressive: "I am traveling", past: "I traveled", future: "I will travel",
+                exPresent: "I travel every summer.", exProgressive: "I am traveling to Spain.", exPast: "I traveled to Paris.", exFuture: "I will travel next year."
+            },
+            { 
+                verb: "visit", spanish: "visitar", 
+                present: "I visit", progressive: "I am visiting", past: "I visited", future: "I will visit",
+                exPresent: "I visit my grandparents.", exProgressive: "I am visiting friends.", exPast: "I visited New York.", exFuture: "I will visit you soon."
+            },
+            { 
+                verb: "shop", spanish: "hacer compras", 
+                present: "I shop", progressive: "I am shopping", past: "I shopped", future: "I will shop",
+                exPresent: "I shop on weekends.", exProgressive: "I am shopping for clothes.", exPast: "I shopped yesterday.", exFuture: "I will shop tomorrow."
+            },
+            { 
+                verb: "relax", spanish: "relajarse", 
+                present: "I relax", progressive: "I am relaxing", past: "I relaxed", future: "I will relax",
+                exPresent: "I relax on Sundays.", exProgressive: "I am relaxing now.", exPast: "I relaxed all day.", exFuture: "I will relax tonight."
+            },
+            { 
+                verb: "cry", spanish: "llorar", 
+                present: "I cry", progressive: "I am crying", past: "I cried", future: "I will cry",
+                exPresent: "I cry sometimes.", exProgressive: "I am crying now.", exPast: "I cried yesterday.", exFuture: "I will cry if I'm sad."
+            },
+            { 
+                verb: "laugh", spanish: "reír", 
+                present: "I laugh", progressive: "I am laughing", past: "I laughed", future: "I will laugh",
+                exPresent: "I laugh at jokes.", exProgressive: "I am laughing now.", exPast: "I laughed so hard.", exFuture: "I will laugh at that."
+            },
+            { 
+                verb: "smile", spanish: "sonreír", 
+                present: "I smile", progressive: "I am smiling", past: "I smiled", future: "I will smile",
+                exPresent: "I smile every day.", exProgressive: "I am smiling now.", exPast: "I smiled at her.", exFuture: "I will smile for the photo."
+            },
+            { 
+                verb: "talk", spanish: "conversar", 
+                present: "I talk", progressive: "I am talking", past: "I talked", future: "I will talk",
+                exPresent: "I talk to my friends.", exProgressive: "I am talking on the phone.", exPast: "I talked for hours.", exFuture: "I will talk to you later."
+            },
+            { 
+                verb: "shout", spanish: "gritar", 
+                present: "I shout", progressive: "I am shouting", past: "I shouted", future: "I will shout",
+                exPresent: "I shout when I'm angry.", exProgressive: "I am shouting for help.", exPast: "I shouted loudly.", exFuture: "I will shout if needed."
+            },
+            { 
+                verb: "whisper", spanish: "susurrar", 
+                present: "I whisper", progressive: "I am whispering", past: "I whispered", future: "I will whisper",
+                exPresent: "I whisper in class.", exProgressive: "I am whispering now.", exPast: "I whispered the secret.", exFuture: "I will whisper to you."
+            }
         ];
         
         let currentIndex = 0;
@@ -473,7 +996,7 @@
             const verb = verbs[currentIndex];
             const utterance = new SpeechSynthesisUtterance(verb.verb);
             utterance.lang = 'en-US';
-            utterance.rate = 0.8; // Slightly slower for clarity
+            utterance.rate = 0.8;
             window.speechSynthesis.speak(utterance);
         }
         
@@ -485,7 +1008,19 @@
             document.getElementById('presentProgressive').textContent = verb.progressive;
             document.getElementById('simplePast').textContent = verb.past;
             document.getElementById('simpleFuture').textContent = verb.future;
+            document.getElementById('examplePresent').textContent = verb.exPresent;
+            document.getElementById('exampleProgressive').textContent = verb.exProgressive;
+            document.getElementById('examplePast').textContent = verb.exPast;
+            document.getElementById('exampleFuture').textContent = verb.exFuture;
             document.getElementById('progress').textContent = `Verb ${index + 1} of ${verbs.length}`;
+            
+            // Hide progressive section for verbs like "be" and "have"
+            const progressiveSection = document.getElementById('progressiveSection');
+            if (verb.hideProgressive) {
+                progressiveSection.classList.add('hidden');
+            } else {
+                progressiveSection.classList.remove('hidden');
+            }
         }
         
         function nextVerb() {
@@ -534,7 +1069,6 @@
             });
         }
         
-        // Initialize
         window.onload = () => {
             displayVerb(0);
         };
